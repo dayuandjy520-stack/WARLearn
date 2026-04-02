@@ -2,12 +2,12 @@ import os
 import argparse
 import xml.etree.ElementTree as ET
 
-def convert_voc_annotation(data_path, data_type, anno_path, use_difficult_bbox=True):
 
-     classes = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
-                'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse',
-                'motorbike', 'person', 'pottedplant', 'sheep', 'sofa',
-                'train', 'tvmonitor']
+def convert_voc_annotation(data_path, data_type, anno_path, use_difficult_bbox=True):
+    classes = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
+               'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse',
+               'motorbike', 'person', 'pottedplant', 'sheep', 'sofa',
+               'train', 'tvmonitor']
 
     img_inds_file = os.path.join(data_path, 'ImageSets', 'Main', data_type + '.txt')
     with open(img_inds_file, 'r') as f:
@@ -23,7 +23,7 @@ def convert_voc_annotation(data_path, data_type, anno_path, use_difficult_bbox=T
             objects = root.findall('object')
             for obj in objects:
                 difficult = obj.find('difficult').text.strip()
-                if (not use_difficult_bbox) and(int(difficult) == 1):
+                if (not use_difficult_bbox) and (int(difficult) == 1):
                     continue
                 bbox = obj.find('bndbox')
                 class_ind = classes.index(obj.find('name').text.lower().strip())
@@ -40,8 +40,8 @@ def convert_voc_annotation(data_path, data_type, anno_path, use_difficult_bbox=T
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_path", default="BackupPlus/data_RTTS/")
-    parser.add_argument("--test_annotation",  default="dataset/RTTS_test.txt")
+    parser.add_argument("--test_annotation", default="dataset/RTTS_test.txt")
     flags = parser.parse_args()
 
-    num3 = convert_voc_annotation(flags.data_path,  'test', flags.test_annotation, False)
-    print('=> The number of image for test is:%d' %num3)
+    num3 = convert_voc_annotation(flags.data_path, 'test', flags.test_annotation, False)
+    print('=> The number of image for test is:%d' % num3)
